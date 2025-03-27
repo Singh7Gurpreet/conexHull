@@ -4,9 +4,24 @@
 #include <iostream>
 #include <vector>
 #include <util.h>
+#include <algorithm>
+#include<set>
+
 using namespace std;
 
 enum Orientation {CCW = -1, CL = 0, CW = 1};
+
+/**
+ * @brief Calculates the euclidean distance between two points a and b in the 2D plane.
+ *
+ */
+
+int distance(pair<int,int> a, pair<int,int> b) {
+    int dx = a.first - b.first;
+    int dy = a.second - b.second;
+    return dx * dx + dy * dy;
+}
+
 
 /**
  * @brief Determines the orientation of three points a, b, and c in the 2D plane.
@@ -31,12 +46,42 @@ enum Orientation {CCW = -1, CL = 0, CW = 1};
  */
 
 
-Orientation calculateOrientation(pair<int,int> a, pair<int,int> b, pair<int,int> c) {
+ Orientation calculateOrientation(pair<int,int> a, pair<int,int> b, pair<int,int> c) {
+    int cross = (b.first - a.first) * (c.second - a.second) -
+                (b.second - a.second) * (c.first - a.first);
 
+    if (cross > 0) return CCW;
+    else if (cross < 0) return CW;
+    else return CL;
 }
 
-vector<pair<int,int>> jarvisMarchFunction(vector<pair<int,int> >& points) {
-  
+set<pair<int,int>> jarvisMarchFunction(vector<pair<int,int> >& points) {
+    
+    pair<int,int> onConvexHull = *min_element(points.begin(), points.end(),
+                                [&](const auto &a, const auto &b) {
+                                    return a.first < b.first; 
+                                }),
+                  firstPoint = onConvexHull;
+    set<pair<int,int>> hull;
+
+    while(true) {
+        hull.insert(onConvexHull);
+        pair<int,int> nextPoint;
+        nextPoint = points[0];
+        for(auto& i : points) {
+            Orientation temp = calculateOrientation(onConvexHull, nextPoint,i);
+            if(temp == CCW ) {
+                nextPoint = i;
+            } else if(temp == CL && 
+                hull.count(i) == 0 && 
+                distance(onConvexHull, i) > distance(onConvexHull, nextPoint)) {
+            nextPoint = i;
+        }         
+    }
+        if(nextPoint == firstPoint) break;
+        onConvexHull = nextPoint;
+    }
+    return hull;
 }
 
 #endif
