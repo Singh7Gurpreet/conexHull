@@ -5,7 +5,7 @@
 #include <vector>
 #include <util.h>
 #include <algorithm>
-#include<set>
+#include <set>
 
 using namespace std;
 
@@ -13,7 +13,7 @@ enum Orientation {CCW = -1, CL = 0, CW = 1};
 
 /**
  * @brief Calculates the euclidean distance between two points a and b in the 2D plane.
- *
+ * have not used square root over that becuase it is computationally expensive
  */
 
 int distance(pair<int,int> a, pair<int,int> b) {
