@@ -1,3 +1,5 @@
+// This is key part of all the algorithms that we are working on.
+
 #ifndef ORIENTATION_CPP
 #define ORIENTATION_CPP
 
