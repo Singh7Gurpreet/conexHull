@@ -4,8 +4,10 @@
 #include<iostream>
 #include<vector>
 #include<stack>
-#include<util.h>
-#include "JarvisMarchAlgorithm.cpp"
+#include<utility>
+#include<set>
+
+#include "./Orientation.cpp"
 
 // global variable that stores the point with minimum y-coordinates
 // in case of ties select with one with leftmost x coordinate
@@ -69,6 +71,12 @@ set<pair<int,int>> GrahamScanFunction(vector<pair<int,int>>& points) {
   vector<pair<int,int>> uniquePoints;
   uniquePoints.push_back(points[0]);
 
+  // if lies on same line then we should keep the outermost
+  // becuase we know that keeping inner most wont be a part
+  // of a convex hull so thats why we kept the outer most
+  // in case of collinears
+  // :)
+
   for (int i = 1; i < points.size(); ++i) {
     while (i < points.size() - 1 &&
            calculateOrientation(p0, points[i], points[i + 1]) == CL)
@@ -77,7 +85,7 @@ set<pair<int,int>> GrahamScanFunction(vector<pair<int,int>>& points) {
   }
 
   if (uniquePoints.size() < 3)
-    return {}; // Convex hull not possible
+    return {};
 
   stack<pair<int,int>> hull;
   hull.push(uniquePoints[0]);

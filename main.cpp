@@ -1,5 +1,6 @@
 #include "src/JarvisMarchAlgorithm.cpp"
 #include "src/GrahamScanAlgorithm.cpp"
+#include "src/QuickHullAlgorithm.cpp"
 
 /*
   We have worked on the famous Convex Hull problem, 
@@ -37,7 +38,7 @@ int main() {
     points.emplace_back(x,y);
   }
 
-  auto result = GrahamScanFunction(points);
+  auto result = quickHull(points);
   for(auto i : result) {
     cout << i.first << " " << i.second << endl;
   }
