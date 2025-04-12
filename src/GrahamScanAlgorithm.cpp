@@ -49,7 +49,7 @@ pair<int,int> p0;
   Summary:
   --------
   This is an elegant trick using vector cross product to sort points
-  by angle **purely using integer arithmetic**, and it's highly robust
+  by angle purely using integer arithmetic, and it's highly robust
   for geometric algorithms.
 */
 
